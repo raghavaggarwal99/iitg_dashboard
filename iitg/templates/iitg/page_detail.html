@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}{{page.name}}{% endblock %}
+
+{% block content %}
+{% load staticfiles %}
+<div class="uk-text-center"><h1>{{page.name}}</h1>
+     {% if y == "create_event" %}
+        <a href="{% url y page.id %}" class="uk-button uk-button-primary">{{x}}</a>
+        <a href="{% url 'create_deadline' page.id %}" class="uk-button uk-button-primary">Create a deadline</a>
+        {% endif %}
+        {% if not y == "create_event" %}
+        <a href="{% url y page.id %}" class="uk-button uk-button-primary">{{x}}</a>
+        {% endif %}
+         
+    {% comment %} {% else %}
+        <a href="" class="uk-button uk-button-primary">Subscribe</a>
+    {% endif %} {% endcomment %}
+    </div><hr>
+    <div class="uk-flex uk-flex-around uk-flex-wrap">
+    {% for event in page.event.all %}
+    {% comment %} <a href="{{ event.get_absolute_url }}" class="uk-button uk-button-text"> {% endcomment %}
+          <div class="uk-card uk-card-hover uk-card-default uk-grid-collapse uk-child-width-1-2@s uk-margin" uk-grid>
+                {% comment %} <div class="uk-card-media-left uk-cover-container">
+                    {% if video.thumbnail %}
+                    <img src="{{video.thumbnail}}" alt="" uk-cover >
+                    {% else %}
+                    <img src="https://media.giphy.com/media/F0uq8iiIL6F6E/giphy.gif" height="80" width="100" alt="" uk-cover >
+                    {% endif %}
+                    <canvas width="100" height="40"></canvas>
+                </div> {% endcomment %}
+                {% comment %} <div>
+                    <div class="uk-card-body"> {% endcomment %}
+                        <h6 class="uk-card-title">{{ event.name }}</h6>
+                        <div class="uk-card-footer uk-text-muted uk-text-small">{{ event.time }}</div>
+                    {% comment %} </div> {% endcomment %}
+                </div>
+            </div>
+        {% comment %} </a> {% endcomment %}
+    {% endfor %}
+    {% for deadline in page.deadline.all %}
+    {% comment %} <a href="{{ event.get_absolute_url }}" class="uk-button uk-button-text"> {% endcomment %}
+          <div class="uk-card uk-card-hover uk-card-default uk-grid-collapse uk-child-width-1-2@s uk-margin" uk-grid>
+                {% comment %} <div class="uk-card-media-left uk-cover-container">
+                    {% if video.thumbnail %}
+                    <img src="{{video.thumbnail}}" alt="" uk-cover >
+                    {% else %}
+                    <img src="https://media.giphy.com/media/F0uq8iiIL6F6E/giphy.gif" height="80" width="100" alt="" uk-cover >
+                    {% endif %}
+                    <canvas width="100" height="40"></canvas>
+                </div> {% endcomment %}
+                {% comment %} <div>
+                    <div class="uk-card-body"> {% endcomment %}
+                        <h6 class="uk-card-title">{{ deadline.name }}</h6>
+                        <div class="uk-card-footer uk-text-muted uk-text-small">{{ deadline.description }}</div>
+                    {% comment %} </div> {% endcomment %}
+                </div>
+            </div>
+        {% comment %} </a> {% endcomment %}
+    {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,8 @@
+{% load staticfiles %}
+
+    {% for page in student.my_pages.all %}
+        {% block content %}
+            {{page.name}}
+        {%end block%}
+    {%end for%}
+

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Signup{% endblock %}
+
+{% block content %}
+<div class="uk-flex-middle">
+<div class="uk-card uk-card-default">
+  <div class="uk-card uk-card-hover">
+
+  <div class="uk-card-header">
+    <h1 class="uk-text-center">Sign up</h1>
+  </div>
+  <div class="uk-card-body">
+    <form action="" method="post">
+          <div class="form-group">
+          {% csrf_token %}
+          <table>
+          {% comment %} {{ form.as_table }} {% endcomment %}
+          {% for field in form %}
+            <div class="form-group" uk-grid>
+                <div class="uk-width-1-4@m">
+                  <h5>{{ field.label_tag }}</h5>
+                </div>
+                <div class="uk-width-1-4@m">{{ field }}</div>
+                {% if field.help_text %}<div class="uk-form-label uk-text-muted uk-width-1-2@m">{{ field.help_text }}</div>{% endif %}
+                {% if field.errors %}
+                <div class="uk-width-1-1@m">
+                    <br>
+                    <ul class="uk-form-danger">
+                    {% for error in field.errors %}
+                        <li><strong>{{ error|escape }}</strong></li>
+                    {% endfor %}
+                    </ul>
+                  </div>
+                {% endif %}
+              </div><hr>
+        {% endfor %}
+          </table><hr><div class="uk-text-center">
+          <input type="submit" value="Submit" class="uk-button uk-button-primary" /></div>
+          </div>
+      </form>
+  </div>
+
+</div>
+</div>
+</div>
+{% endblock %}

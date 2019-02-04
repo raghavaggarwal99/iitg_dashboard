@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.30/css/uikit.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito|Open+Sans" rel="stylesheet"> 
+    <style>
+        h1,h6{
+            font-family: 'Nunito', sans-serif;
+            font-weight: 100;
+        }
+        
+        body{
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 300;
+        }
+        
+        iframe{
+            width: 49%;
+        }
+        
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">  
+	{% block extra_head %}{% endblock %}
+</head>
+<body>
+    <nav class="uk-navbar-container uk-navbar-transparent" uk-navbar>
+        <div class="uk-navbar-left">
+    
+            <a class="uk-navbar-item uk-logo" href="{% url 'home' %}">Deep Dashboard</a>
+            {% if user.is_authenticated %}
+            <ul class="uk-navbar-nav">
+                <li>
+                    <a href="{% url 'my_pages' %}">
+                        <span class="uk-icon uk-margin-small-right" uk-icon="icon: star"></span>
+                        My Pages
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'createpage' %}">
+                        <span class="uk-icon uk-margin-small-right" uk-icon="icon: star"></span>
+                        Create a Page
+                    </a>
+                </li>
+            </ul>
+            {% endif %}
+        </div>
+        <div class="uk-navbar-right">
+                {% comment %} {% block search %}
+                <form id="searchform" action="{% url 'search_list_view' %}" method="get" accept-charset="utf-8">
+                        <input class="uk-input uk-form-width-large" type="text" placeholder="Search" aria-label="Search" name="transcript" id="searchbox">
+                        <button class="uk-button uk-button-primary" type="submit">Search</button>
+                      </form>    
+                {% endblock %} {% endcomment %}
+                    </div>
+            <div class="uk-navbar-right">
+                <a href="{% url 'page_list'%}" class="uk-button uk-button-default">Find Pages</a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'logout'%}?next={{request.path}}" class="uk-button uk-button-default">Logout</a>
+                {% endif %}
+    
+        </div>
+    </nav>
+    {% block container %}
+    <div class="uk-container">
+        <br>
+    {% block content %}
+    
+    {% endblock content %}
+    </div>
+    {% endblock %}
+  {% block pagination %}
+  {% if is_paginated %}
+  {% if page_obj.has_previous or page_obj.has_next %}
+  <div class="page">
+      <div class="pagination">
+          <span class="page-links">
+              {% if page_obj.has_previous %}
+                  <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Previous</a>
+              {% endif %}
+              <span class="page-current">
+                  Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+              </span>
+              {% if page_obj.has_next %}
+                  <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">Next</a>
+              {% endif %}
+          </span>
+      </div>
+    </div>
+    {% endif %}
+  {% endif %}
+{% endblock %}
+  {% block extra_body %}{% endblock %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.30/js/uikit.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.30/js/uikit-icons.min.js"></script>
+  {% block extra_js %}
+  {% endblock extra_js %}  
+</body>
+</html>
